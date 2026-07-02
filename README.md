@@ -191,37 +191,82 @@ source 04_bonus.sql;
 ### 쿼리 실행 결과
 
 ```bash
-#1. Q01 | 기본 조회 | 현재 대출 중인 도서 목록 (WHERE + ORDER BY)
-SELECT
-    r.rental_id,
-    m.name         AS 회원명,
-    b.title        AS 도서명,
-    r.rented_at    AS 대여일,
-    r.due_date     AS 반납예정일,
-    r.status       AS 상태
-FROM rental r
-JOIN member m ON r.member_id = m.member_id
-JOIN book   b ON r.book_id   = b.book_id
-WHERE r.status IN ('RENTING', 'OVERDUE')
-ORDER BY r.rented_at DESC;
-
+# Q01 | 기본 조회 | 현재 대출 중인 도서 목록 (WHERE + ORDER BY)
 ![Q01 실행결과](query_results/q01.png)
 ```
 ```bash
-| Q02 | 기본 조회 | VIP 회원 목록 (WHERE + ORDER BY) |
-| Q03 | 기본 조회 | 소설 카테고리 도서 목록 (WHERE + ORDER BY) |
-| Q04 | 기본 조회 | 별점 4점 이상 리뷰 TOP 5 (WHERE + ORDER BY + LIMIT) |
-| Q05 | 조인 | 전체 대여 이력 조회 (INNER JOIN 3중) |
-| Q06 | 조인 | 연체 회원 및 연체일수 (INNER JOIN + DATEDIFF) |
-| Q07 | 조인 | 도서별 평균 별점, 리뷰 없는 도서 포함 (LEFT JOIN) |
-| Q08 | 조인 | 회원별 총 대여횟수, 0회 포함 (LEFT JOIN) |
-| Q09 | 집계 | 카테고리별 보유 도서 통계 (COUNT + SUM + AVG) |
-| Q10 | 집계 | 월별 대여 건수 집계 (GROUP BY + DATE_FORMAT) |
-| Q11 | 집계 | 리뷰 2개 이상 작성 회원의 평균 별점 (HAVING) |
-| Q12 | 서브쿼리 | 전체 평균 별점보다 높은 도서 목록 |
-| Q13 | 인덱스 | 인덱스 4개 생성 및 확인 |
-| Q14 | 수정 | 연체 도서 반납 처리 (UPDATE) |
-| Q15 | 삭제 | 저평점 리뷰 삭제 (DELETE) |
+# Q02 | 기본 조회 | VIP 회원 목록 (WHERE + ORDER BY) |
+![Q02 실행결과](query_results/q02.png)
+```
+```bash
+# Q03 | 기본 조회 | 소설 카테고리 도서 목록 (WHERE + ORDER BY) |
+![Q03 실행결과](query_results/q03.png)
+```
+```bash
+# Q04 | 기본 조회 | 별점 4점 이상 리뷰 TOP 5 (WHERE + ORDER BY + LIMIT) |
+![Q04 실행결과](query_results/q04.png)
+```
+```bash
+# Q05 | 조인 | 전체 대여 이력 조회 (INNER JOIN 3중) |
+![Q05 실행결과](query_results/q05.png)
+```
+```bash
+# Q06 | 조인 | 연체 회원 및 연체일수 (INNER JOIN + DATEDIFF) |
+![Q06 실행결과](query_results/q06.png)
+```
+```bash
+# Q07 | 조인 | 도서별 평균 별점, 리뷰 없는 도서 포함 (LEFT JOIN) |
+![Q07 실행결과](query_results/q07.png)
+```
+```bash
+# Q08 | 조인 | 회원별 총 대여횟수, 0회 포함 (LEFT JOIN) |
+![Q08 실행결과](query_results/q08.png)
+```
+```bash
+# Q09 | 집계 | 카테고리별 보유 도서 통계 (COUNT + SUM + AVG) |
+![Q09 실행결과](query_results/q09.png)
+```
+```bash
+# Q10 | 집계 | 월별 대여 건수 집계 (GROUP BY + DATE_FORMAT) |
+![Q10 실행결과](query_results/q10.png)
+```
+```bash
+# Q11 | 집계 | 리뷰 2개 이상 작성 회원의 평균 별점 (HAVING) |
+![Q11 실행결과](query_results/q11.png)
+```
+```bash
+# Q12 | 서브쿼리 | 전체 평균 별점보다 높은 도서 목록 |
+![Q12 실행결과](query_results/q12.png)
+```
+```bash
+# Q13 | 인덱스 | 인덱스 4개 생성 및 확인 |
+![Q13 실행결과](query_results/q13.png)
+```
+```bash
+# Q14 | 수정 | 연체 도서 반납 처리 (UPDATE) |
+
+# 반납 처리 전 상태 확인
+rental_id|회원명|도서명 |상태     |반납일|현재대출가능수|
+---------+---+----+-------+---+-------+
+        4|최유진|코스모스|OVERDUE|   |      1|
+
+#반납 상태로 업데이트
+rental_id|회원명|도서명 |상태      |반납일       |현재대출가능수|
+---------+---+----+--------+----------+-------+
+        4|최유진|코스모스|RETURNED|2024-04-15|      2|
+```
+
+```bash
+# Q15 | 삭제 | 저평점 리뷰 삭제 (DELETE) |
+
+#삭제 전
+review_id|작성자|도서명 |별점|리뷰내용                   |
+---------+---+----+--+-----------------------+
+       10|최유진|코스모스| 2|생각보다 어려웠습니다. 중급자 이상 추천.|
+
+#삭제 후
+review_id|작성자|도서명|별점|
+---------+---+---+--+
 ```
 
 ---
