@@ -250,6 +250,7 @@ review_id|작성자|도서명|별점|
 | 월별 대여 건수 추이 | 월별 대여/반납/연체 건수와 반납완료율 |
 | 인기 도서 TOP 5 | 대여횟수 + 평균별점을 함께 집계 |
 | 연체 회원 목록 | 연체횟수, 연체율, 마지막 연체일 포함 |
+
 ![bonus_1 실행결과](query_results/bonus_1.png)
 ![bonus_2 실행결과](query_results/bonus_2.png)
 ![bonus_3 실행결과](query_results/bonus_3.png)
